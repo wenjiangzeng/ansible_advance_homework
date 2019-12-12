@@ -1,4 +1,5 @@
 - hosts: workstation
   become: yes
   roles:
+    - osp-setup
     - osp-servers

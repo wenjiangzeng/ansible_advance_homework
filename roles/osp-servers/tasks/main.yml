@@ -4,16 +4,11 @@
 - name: Create new server instances and attaches them a network and passes metadata to the instance
   os_server:
     cloud: ospcloud
-    name: "{{ item.name }}"
-    image: "{{ item.image }}"
-    meta: "group={{ item.group }},deployment_name={{ item.deployment_name }}"
-    flavor: "{{ item.flavor }}"
-    security_groups: "{{ item.security_group }}"
-    with_items: 
-      - { name: "{{osp_servers.frontend.name}}", image: "{{osp_servers.frontend.image}}", group: "{{osp_servers.frontend.group}}", deployment_name: "{{osp_servers.frontend.deployment_name}}", flavor: "{{osp_servers.frontend.flavor}}", security_group: "{{osp_servers.frontend.security_group}}" }
-      - { name: "{{osp_servers.app1.name}}", image: "{{osp_servers.app1.image}}", group: "{{osp_servers.app1.group}}", deployment_name: "{{osp_servers.app1.deployment_name}}", flavor: "{{osp_servers.app1.flavor}}", security_group: "{{osp_servers.app1.security_group}}" }
-      - { name: "{{osp_servers.app2.name}}", image: "{{osp_servers.app2.image}}", group: "{{osp_servers.app2.group}}", deployment_name: "{{osp_servers.app2.deployment_name}}", flavor: "{{osp_servers.app2.flavor}}", security_group: "{{osp_servers.app2.security_group}}" }
-      - { name: "{{osp_servers.db.name}}", image: "{{osp_servers.db.image}}", group: "{{osp_servers.db.group}}", deployment_name: "{{osp_servers.db.deployment_name}}", flavor: "{{osp_servers.db.flavor}}", security_group: "{{osp_servers.db.security_group}}" }
+    name: "{{ name }}"
+    image: "{{ image }}"
+    meta: "group={{ group }},deployment_name={{ deployment_name }}"
+    flavor: "{{ flavor }}"
+    security_groups: "{{ security_group }}"
     key_name: ansible_ssh
     wait: yes
     nics:
@@ -26,23 +21,18 @@
         cp /tmp/internal.repo /etc/yum.repos.d/internal.repo
   register: instanceip
 
-- name: Add floating IP to Server
+- name: Add floating IP to Server "{{ name }}"
   os_floating_ip:
     cloud: ospcloud
-    state: "{{ item.state }}"
+    state: "{{ state }}"
     reuse: yes
-    server: "{{ item.name }}"
+    server: "{{ name }}"
     network: ext_network
     wait: true
     timeout: 180
-    with_items: 
-      - { state: "{{osp_servers.frontend.state}}", name: "{{osp_servers.frontend.name}}" } 
-      - { state: "{{osp_servers.app1.state}}", name: "{{osp_servers.app1.name}}" }
-      - { state: "{{osp_servers.app2.state}}", name: "{{osp_servers.app2.name}}" } 
-      - { state: "{{osp_servers.db.state}}", name: "{{osp_servers.db.name}}" } 
-    register: instancefloatingip
+  register: instancefloatingip
 
-- name: Wait for server to be available
+- name: Wait for server "{{ name }}" to be available
   wait_for:
     host: "{{ instancefloatingip.floating_ip.floating_ip_address }}"
     port: 22

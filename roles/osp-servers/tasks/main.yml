@@ -4,10 +4,10 @@
 - name: Create new server instances and attaches them a network and passes metadata to the instance
   os_server:
     cloud: ospcloud
-    name: "{{ instance_name }}"
-    image: rhel-guest
-    meta: "group={{ group }},deployment_name={{ deployment }}"
-    flavor: m2.small
+    name: "{{ name }}"
+    image: "{{ image }}"
+    meta: "group={{ group }},deployment_name={{ deployment_name }}"
+    flavor: "{{ flavor }}"
     security_groups: "{{ security_group_name }}"
     key_name: ansible_ssh
     wait: yes
@@ -24,9 +24,9 @@
 - name: Add floating IP to Server
   os_floating_ip:
     cloud: ospcloud
-    state: present
+    state: "{{ state }}"
     reuse: yes
-    server: "{{ instance_name }}"
+    server: "{{ name }}"
     network: ext_network
     wait: true
     timeout: 180

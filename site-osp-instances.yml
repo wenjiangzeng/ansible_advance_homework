@@ -1,4 +1,21 @@
-- hosts: workstation
+- name: Provision OpenStack Environment 
+  hosts: workstation
   become: yes
   roles:
-    - osp-servers
+    - osp-setup
+  
+  tasks:
+  
+  - name: create Frontend instance
+    include_role:
+      name: osp-servers
+      vars:
+        name: "{{ osp_servers.frontend.name }}"
+        image: "{{ osp_servers.frontend.image }}"
+        group: "{{ osp_servers.frontend.group }}"
+        deployment_name: "{{ osp_servers.frontend.deployment_name }}"
+        flavor: "{{ osp_servers.frontend.flavor }}"
+        security_group: "{{ osp_servers.frontend.security_group }}"
+        state: "{{ osp_servers.frontend.security_group }}"
+        
+        

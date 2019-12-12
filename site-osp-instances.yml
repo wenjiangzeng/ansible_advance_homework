@@ -9,7 +9,7 @@
   - name: create Frontend instance
     include_role:
       name: osp-servers
-      vars:
+      vars_from: main.yaml
         name: "{{ osp_servers.frontend.name }}"
         image: "{{ osp_servers.frontend.image }}"
         group: "{{ osp_servers.frontend.group }}"

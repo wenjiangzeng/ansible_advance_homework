@@ -2,14 +2,9 @@
   hosts: workstation
   become: yes
   roles:
-    - osp-setup
-  
-  tasks:
-  
-  - name: create Frontend instance
-    include_role:
-      name: osp-servers
-      vars_from: main.yaml
+    - role: osp-setup
+    - role: osp-servers
+      vars: 
         name: "{{ osp_servers.frontend.name }}"
         image: "{{ osp_servers.frontend.image }}"
         group: "{{ osp_servers.frontend.group }}"

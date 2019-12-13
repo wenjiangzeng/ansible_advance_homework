@@ -10,7 +10,7 @@
     flavor: "{{ item.0.flavor }}"
     security_groups: "{{ item.0.security_group }}"
     key_name: ansible_ssh
-    with_together:
+    with_subelements:
       - "{{osp_servers}}"
       - meta
     wait: yes

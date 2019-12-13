@@ -3,13 +3,6 @@
   become: yes
   roles:
     - role: osp-servers
-      vars: 
-        instance_name: "{{ osp_servers.frontend.name }}"
-        image: "{{ osp_servers.frontend.image }}"
-        instance_group: "{{ osp_servers.frontend.meta.group }}"
-        deployment_name: "{{ osp_servers.frontend.meta.deployment_name }}"
-        flavor: "{{ osp_servers.frontend.flavor }}"
-        security_group: "{{ osp_servers.frontend.security_group }}"
-        state: "{{ osp_servers.frontend.security_group }}"
+
         
         

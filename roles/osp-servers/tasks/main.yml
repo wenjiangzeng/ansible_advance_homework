@@ -9,7 +9,7 @@
     meta: "group={{ item.meta.group }},deployment_name={{ item.meta.deployment_name }}"
     flavor: "{{ item.flavor }}"
     security_groups: "{{ item.security_group }}"
-    with_together:
+    with_items:
       - {{ osp_servers.frontend }}
     key_name: ansible_ssh
     wait: yes

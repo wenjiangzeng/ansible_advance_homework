@@ -24,8 +24,6 @@
   tags:
   - test.servers
 
-
-
 - name: Add floating IP to Servers
   os_floating_ip:
     cloud: ospcloud

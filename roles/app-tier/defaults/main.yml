@@ -1,9 +1,2 @@
 ---
 # defaults file for app-tier
-
-
-- name: start {{ payload }}
-  service:
-    name: tomcat
-    state: started
-

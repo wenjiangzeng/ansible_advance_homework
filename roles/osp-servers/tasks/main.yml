@@ -10,7 +10,7 @@
     flavor: "{{ item.flavor }}"
     security_groups: "{{ item.security_group }}"
     with_items:
-      - {{ osp_servers.frontend }}
+      - "{{ osp_servers.frontend }}"
     key_name: ansible_ssh
     wait: yes
     nics:

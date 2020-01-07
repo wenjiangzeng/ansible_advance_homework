@@ -2,4 +2,20 @@
 # tasks file for roles/osp-instance-delete
   - name: Fetch Instance Info
   - name: Delete instances
-   
+
+  hosts: osp_workstation
+  become: yes
+
+  tasks:
+  - name: Clean up OpenStack VMs
+    os_server:
+      state: absent
+      cloud: ospcloud
+      name: "{{ item }}"
+      delete_fip: true
+    with_items:
+      - app1
+      - app2
+      - db
+      - frontend
+
